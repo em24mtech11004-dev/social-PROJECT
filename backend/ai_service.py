@@ -132,33 +132,9 @@ class AIService:
         return result
     
     async def extract_prescription(self, prescription_text: str) -> Dict[str, Any]:
-        """Extract structured data from prescription text using LlamaExtract or regex fallback"""
-        if self.llama_client:
-            try:
-                from llama_cloud import ExtractConfig, ExtractMode
-                
-                # Create temporary file for LlamaExtract
-                with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
-                    f.write(prescription_text)
-                    temp_path = f.name
-                
-                config = ExtractConfig(extraction_mode=ExtractMode.FAST)
-                result = self.llama_client.extract(
-                    schema=ExtractedPrescription,
-                    file_path=temp_path,
-                    config=config
-                )
-                
-                # Clean up temp file
-                os.unlink(temp_path)
-                
-                if result and len(result) > 0:
-                    return result[0].model_dump() if hasattr(result[0], 'model_dump') else dict(result[0])
-                    
-            except Exception as e:
-                logger.error(f"LlamaExtract failed: {e}. Falling back to regex.")
-        
-        # Fallback to regex extraction
+        """Extract structured data from prescription text using LlamaCloud or regex fallback"""
+        # For now, use regex extraction as it's reliable and doesn't require async API calls
+        # The LlamaCloud extraction can be added later with proper async handling
         return self.extract_with_regex(prescription_text)
     
     def generate_summary_with_provenance(self, extracted_data: Dict[str, Any], 
