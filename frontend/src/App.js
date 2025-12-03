@@ -779,7 +779,14 @@ const DoctorDashboard = ({ user }) => {
   };
 
   const handleCreatePrescription = async () => {
-    if (!selectedDoctor) return;
+    if (!selectedDoctor) {
+      alert("Please select a doctor first");
+      return;
+    }
+    if (!prescriptionData.patient_name) {
+      alert("Please enter patient name");
+      return;
+    }
     try {
       await api.createPrescription(
         prescriptionData,
@@ -798,8 +805,10 @@ const DoctorDashboard = ({ user }) => {
         clinic: ""
       });
       loadData();
+      alert("Prescription created successfully!");
     } catch (error) {
       console.error("Failed to create prescription:", error);
+      alert("Failed to create prescription. Please try again.");
     }
   };
 
