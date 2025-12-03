@@ -32,16 +32,16 @@ class AIService:
     def _init_llama(self):
         """Initialize LlamaExtract client"""
         try:
-            from llama_cloud_services import LlamaExtract
+            from llama_cloud.client import LlamaCloud
             if self.api_key:
-                self.llama_client = LlamaExtract(api_key=self.api_key)
-                logger.info("LlamaExtract client initialized successfully")
+                self.llama_client = LlamaCloud(token=self.api_key)
+                logger.info("LlamaCloud client initialized successfully")
             else:
                 logger.warning("No LLAMA_API_KEY found, using regex extraction fallback")
         except ImportError as e:
-            logger.warning(f"Could not import LlamaExtract: {e}. Using regex fallback.")
+            logger.warning(f"Could not import LlamaCloud: {e}. Using regex fallback.")
         except Exception as e:
-            logger.error(f"Error initializing LlamaExtract: {e}")
+            logger.error(f"Error initializing LlamaCloud: {e}")
     
     def extract_with_regex(self, prescription_text: str) -> Dict[str, Any]:
         """Fallback regex-based extraction from notebook's ground truth logic"""
