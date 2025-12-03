@@ -272,6 +272,8 @@ async def create_prescription(prescription: PrescriptionCreate, doctor_name: str
     }
     await db.dispense_requests.insert_one(dispense_request)
     
+    # Remove MongoDB _id before returning
+    presc_dict.pop("_id", None)
     return presc_dict
 
 @api_router.put("/prescriptions/{prescription_id}/status")
