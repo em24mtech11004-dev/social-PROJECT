@@ -889,7 +889,7 @@ const DoctorDashboard = ({ user }) => {
               Patients with AI Clinical Summaries
             </CardTitle>
             <CardDescription>
-              Click "View Summary" to see AI-generated summaries with provenance links to original clinical data
+              Click &quot;View Summary&quot; to see AI-generated summaries with provenance links to original clinical data
             </CardDescription>
           </CardHeader>
           <CardContent>
